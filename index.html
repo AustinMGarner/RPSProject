@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let humanScore = 0;
+        let computerScore = 0;
+
+        const choices = ['rock', 'paper', 'scissors'];
+        
+        function getComputerChoice() {
+            let randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
+
+        function getHumanChoice() {
+            while (true) {
+                // Ask for user input
+                let humanChoice = prompt(`Please type one of the following: ${choices.join(', ')}`);
+
+                // Check if the input matches one of the valid choices (case-insensitive)
+                if (choices.map(choice => choice.toLowerCase()).includes(humanChoice.toLowerCase())) {
+                    alert(`You selected: ${humanChoice}`);
+                    return humanChoice; // Return the valid choice
+                } else {
+                    alert(`Invalid choice. Please try again.`);
+                }
+            }
+        }
+
+        function playRound(humanChoice, computerChoice) {
+            if (humanChoice === computerChoice) {
+                // It's a tie, no points are awarded
+                return;
+            } else if (humanChoice === 'rock' && computerChoice === 'scissors') {
+                humanScore++;
+            } else if (humanChoice === 'scissors' && computerChoice === 'paper') {
+                humanScore++;
+            } else if (humanChoice === 'paper' && computerChoice === 'rock') {
+                humanScore++;
+            } else {
+                // If none of the above conditions match, computer wins
+                computerScore++;
+            }
+        }
+
+        function playGame() {
+            for (let i = 0; i < 5; i++) {
+                let computerChoice = getComputerChoice();
+                let humanChoice = getHumanChoice();
+                playRound(humanChoice, computerChoice);  // Pass choices as arguments
+
+                console.log(`Round ${i + 1}:`);
+                console.log(`Human Choice: ${humanChoice}`);
+                console.log(`Computer Choice: ${computerChoice}`);
+                console.log(`Human Score: ${humanScore}`);
+                console.log(`Computer Score: ${computerScore}`);
+            }
+
+            // Final results
+            console.log("Final Scores:");
+            console.log(`Human: ${humanScore}, Computer: ${computerScore}`);
+        }
+
+        playGame();
+
+    </script>
+</body>
+</html>
